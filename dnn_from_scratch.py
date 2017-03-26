@@ -8,7 +8,7 @@ class NeuralNetwork:
         reader = csv.reader(open("normalized_car_features.csv", "rb"), delimiter=",")
         x = list(reader)
         features = np.array(x[1:]).astype("float")
-        #np.random.shuffle(features)
+        np.random.shuffle(features)
 
         data_x = np.concatenate((features[:, :3], np.ones((features.shape[0], 1))), axis=1)
         data_y = features[:, 3:]
@@ -159,7 +159,7 @@ nn.backward()
 # nn.check_gradients()
 
 print("### Training data ###")
-nb_it = 2000
+nb_it = 100000
 for step in xrange(nb_it):
 
     nn.forward()
@@ -175,5 +175,7 @@ nn.y = nn.y_test
 nn.forward()
 print("### Testing summary ###")
 nn.summary(nb_it)
+print(nn.y)
+print(nn.a4)
 
 # make a CuDNN version
