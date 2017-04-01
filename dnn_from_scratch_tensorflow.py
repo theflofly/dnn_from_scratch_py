@@ -83,3 +83,5 @@ with tf.Session() as session:
     print("Predicted price: " + str(predict.output(session.run(layer_3, feed_dict))))
 
 writer = tf.summary.FileWriter('tensorboard', graph=tf.get_default_graph())
+
+# TODO: test set
