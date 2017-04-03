@@ -75,13 +75,14 @@ with tf.Session() as session:
     session.run(init)
 
     # we'll make 5000 gradient descent iteration
-    for i in range(1000):
+    for i in range(5000):
         session.run(train_op, feed_dict={x: x_data, y: y_data})
 
     # do a forward pass
-    feed_dict = {x: predict.input(168000, "Diesel", 5)}
+    feed_dict = {x: predict.input(142000, "Diesel", 9)}
     print("Predicted price: " + str(predict.output(session.run(layer_3, feed_dict))))
 
 writer = tf.summary.FileWriter('tensorboard', graph=tf.get_default_graph())
 
 # TODO: test set
+# TODO: gradient checking
