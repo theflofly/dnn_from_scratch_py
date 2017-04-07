@@ -78,11 +78,12 @@ with tf.Session() as session:
     for i in range(5000):
         session.run(train_op, feed_dict={x: x_data, y: y_data})
 
+    # testing the network
+    print("Testing data")
+    print("Loss: " + str(session.run([layer_3, loss], feed_dict={x: x_test, y: y_test})[1]))
+
     # do a forward pass
-    feed_dict = {x: predict.input(142000, "Diesel", 9)}
+    feed_dict = {x: predict.input(168000, "Diesel", 5)}
     print("Predicted price: " + str(predict.output(session.run(layer_3, feed_dict))))
 
 writer = tf.summary.FileWriter('tensorboard', graph=tf.get_default_graph())
-
-# TODO: test set
-# TODO: gradient checking
