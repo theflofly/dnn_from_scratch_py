@@ -1,6 +1,6 @@
 # About
 
-This project provides the python code that support the (soon published) blog post (if you are a beginner, you should read it).
+This project provides the python code that supports this [blog post](https://matrices.io/deep-neural-network-from-scratch/) (if you are a beginner, you should read it).
 
 The goal is to make a neural network from scratch using numpy, then the same one using TensorFlow.
 
