@@ -1,3 +1,7 @@
+# Note
+
+The project works with python 2.7.
+
 # About
 
 This project provides the python code that supports this [blog post](https://matrices.io/deep-neural-network-from-scratch/) (if you are a beginner, you should read it).
