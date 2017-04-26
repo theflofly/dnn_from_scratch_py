@@ -1,6 +1,6 @@
 # Note
 
-The project works with python 2.7.
+The project works with python 2.7 (shame on me, I'll work on it soon).
 
 # About
 
