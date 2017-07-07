@@ -4,7 +4,7 @@ import tensorflow as tf
 import predict as util
 
 # read the data from the CSV
-reader = csv.reader(open("normalized_car_features.csv", "rb"), delimiter=",")
+reader = csv.reader(open("normalized_car_features.csv", "r"), delimiter=",")
 x = list(reader)
 features = np.array(x[2:]).astype("float")
 np.random.shuffle(features)
@@ -75,7 +75,7 @@ with tf.Session() as session:
     session.run(init)
 
     # we'll make 5000 gradient descent iteration
-    for i in range(5000):
+    for i in range(10000):
         session.run(train_op, feed_dict={x: x_data, y: y_data})
 
     # testing the network

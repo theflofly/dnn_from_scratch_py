@@ -7,7 +7,7 @@ class NeuralNetwork:
     def __init__(self):
 
         # load the dataset from the CSV file
-        reader = csv.reader(open("normalized_car_features.csv", "rb"), delimiter=",")
+        reader = csv.reader(open("normalized_car_features.csv", "r"), delimiter=",")
         x = list(reader)
         features = np.array(x[2:]).astype("float")
         np.random.shuffle(features)
@@ -180,7 +180,7 @@ nn.check_gradients()
 
 print("### Training data ###")
 nb_it = 5000
-for step in xrange(nb_it):
+for step in range(nb_it):
 
     nn.forward()
     nn.backward()

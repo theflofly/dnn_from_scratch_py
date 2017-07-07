@@ -4,9 +4,9 @@ This script normalize the car dataset and produce the normalized_car_features.cs
 import csv
 import numpy as np
 
-reader = csv.reader(open("car_features.csv", "rb"), delimiter=",")
+reader = csv.reader(open("car_features.csv", "r"), delimiter=",")
 x = list(reader)
-features = np.array(x).astype("string")
+features = np.array(x).astype("str")
 
 feature_cleaned = []
 
@@ -17,7 +17,7 @@ for feature in features[1:, :]:
         feature_cleaned.append(feature)
 
 print("Original dataset size: " + str(features.shape[0] - 1))
-features = np.array(feature_cleaned).astype("string")
+features = np.array(feature_cleaned).astype("str")
 print("Cleaned dataset size: " + str(features.shape[0]))
 
 # standardize kilometers: (x - mean)/std

@@ -5,7 +5,10 @@ This script download data from leboncoin.fr and save them into a CSV file named 
 """
 from bs4 import BeautifulSoup
 import requests
-import urlparse
+try:
+    from urllib.parse import urlparse, parse_qs
+except ImportError:
+    from urlparse import urlparse, parse_qs
 import csv
 
 # the BMW1 serie 1 page is used
@@ -18,8 +21,8 @@ carLinks = set()
 pageLinks = set()
 data_set = []
 
-parsed = urlparse.urlparse(soup.select('a#last')[0].get('href'))
-nbPage = urlparse.parse_qs(parsed.query)['o'][0]
+parsed = urlparse(soup.select('a#last')[0].get('href'))
+nbPage = parse_qs(parsed.query)['o'][0]
 print("There are " + str(nbPage) + " web pages to process")
 
 # for each web page that contains a grid of car offers
