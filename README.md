@@ -1,6 +1,10 @@
+# Note
+
+The project works with python 2.7 (shame on me, I'll work on it soon).
+
 # About
 
-This project provides the python code that support the (soon published) blog post (if you are a beginner, you should read it).
+This project provides the python code that supports this [blog post](https://matrices.io/deep-neural-network-from-scratch/) (if you are a beginner, you should read it).
 
 The goal is to make a neural network from scratch using numpy, then the same one using TensorFlow.
 
@@ -14,8 +18,16 @@ These data are then normalized by `normalize_lbc_cars_data.py` to produce `norma
 
 `normalized_car_features.csv` is used as input by `dnn_from_scratch.py` which is the neural network using numpy and `dnn_from_scratch_tensorflow.py` which is the neural network using TensorFlow.
 
+`predict.py` is used to transform the data back and forth from the normalized to the human readeable version. For instance to predict a price, the user will input the raw car attributes. `predict.py` will convert the raw data to the normalized version and return them. The neural network output is also given to `predict.py` so that the user obtains a readable price and not a normalized one.
+
 Overall results are pretty good knowing that the price is impacted by more than three attributes.
 
 # Network architecture
+The architecture is pretty simple and well described in the blog post. Here is an illustration:
+![Network architecture](https://matrices.io/content/images/2017/02/DNN-S12.png)
+
 # Usage
-Make a pip package?
+A requirements.txt file exists at the root of the repository. Run `pip install -r requirements.txt `.
+
+# Issue
+If you see a bad implementation or you come across a bug, open an issue. I'll help you.
