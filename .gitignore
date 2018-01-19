@@ -1,2 +1,4 @@
 .idea
 tensorboard/
+__pycache__/
+*.pyc

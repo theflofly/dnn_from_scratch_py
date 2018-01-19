@@ -1,7 +1,16 @@
 import csv
+import os
+import shutil
 import numpy as np
 import tensorflow as tf
 import predict as util
+
+saved_model_directory = "saved_model"
+
+# if a saved model directory exist we delete it because TF
+# will not overwrite it (and throw an error)
+if os.path.isdir(saved_model_directory):
+    shutil.rmtree(saved_model_directory)
 
 # read the data from the CSV
 reader = csv.reader(open("normalized_car_features.csv", "r"), delimiter=",")
@@ -10,7 +19,7 @@ features = np.array(x[2:]).astype("float")
 np.random.shuffle(features)
 
 predict = util.Predict(float(x[0][0]), float(x[0][1]), float(x[0][2]), float(x[0][3]), float(x[0][4]),
-                                    float(x[0][5]))
+                       float(x[0][5]))
 
 data_x = features[:, :3]
 data_y = features[:, 3:]
@@ -53,7 +62,7 @@ with tf.name_scope('layer_2'):
     layer_2 = tf.nn.tanh(tf.add(tf.matmul(layer_1, w2), b2))
 
 with tf.name_scope('layer_3'):
-    layer_3 = tf.nn.tanh(tf.add(tf.matmul(layer_2, w3),  b3))
+    layer_3 = tf.nn.tanh(tf.add(tf.matmul(layer_2, w3), b3))
 
 with tf.name_scope('regularization'):
     # L2 regularization applied on each weight
@@ -71,6 +80,9 @@ with tf.name_scope('train'):
 # launching the previously defined model begins here
 init = tf.global_variables_initializer()
 
+# we'll saved the model once the training is done
+builder = tf.saved_model.builder.SavedModelBuilder(saved_model_directory)
+
 with tf.Session() as session:
     session.run(init)
 
@@ -78,12 +90,15 @@ with tf.Session() as session:
     for i in range(10000):
         session.run(train_op, feed_dict={x: x_data, y: y_data})
 
+    builder.add_meta_graph_and_variables(session, ["dnn_from_scratch_tensorflow"])
+
     # testing the network
     print("Testing data")
-    print("Loss: " + str(session.run([layer_3, loss], feed_dict={x: x_test, y: y_test})[1]))
+    print("Loss: " + str(session.run([loss], feed_dict={x: x_test, y: y_test})[0]))
 
     # do a forward pass
-    feed_dict = {x: predict.input(168000, "Diesel", 5)}
-    print("Predicted price: " + str(predict.output(session.run(layer_3, feed_dict))))
+    print("Predicted price: " + str(predict.output(session.run(layer_3,
+                                                               feed_dict={x: predict.input(168000, "Diesel", 5)}))))
 
-writer = tf.summary.FileWriter('tensorboard', graph=tf.get_default_graph())
+# saving the model
+builder.save()
